@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
-// import { Button } from "@/components/ui/button";
 import { CalendarDays, Sparkles } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -51,13 +51,13 @@ function Home() {
               </p>
             </div>
 
-            {/* <Button
+            <Button
               size="lg"
               className="group relative bg-gradient-to-r from-pink-600 to-purple-600 text-white hover:from-pink-500 hover:to-purple-500 px-8 py-6 text-lg transition-all duration-300 ease-out hover:scale-105"
             >
               <CalendarDays className="mr-2 h-5 w-5 transition-transform duration-300 ease-out group-hover:rotate-12" />
               View This Week's Releases
-            </Button> */}
+            </Button>
           </div>
         </div>
       </section>
