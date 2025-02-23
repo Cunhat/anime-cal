@@ -1,9 +1,7 @@
-import { LoginSection } from "@/components/navbar";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { createFileRoute, Link } from "@tanstack/react-router";
-
-import { CalendarDays, Sparkles, LogIn } from "lucide-react";
+import { CalendarDays, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -12,7 +10,7 @@ export const Route = createFileRoute("/")({
 function Home() {
   return (
     <div className="dark">
-      <LoginSection />
+      {/* <LoginSection /> */}
       <section className="relative flex justify-center items-center min-h-[80vh] overflow-hidden bg-[#000000] py-20">
         {/* Subtle dots */}
         <div

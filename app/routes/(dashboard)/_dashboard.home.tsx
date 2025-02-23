@@ -1,14 +1,6 @@
 import { Title } from "@/components/typography";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import { Card, CardContent } from "@/components/ui/card";
 
 const fetchWeeklyAnime = async () => {
   const response = await fetch(
@@ -37,7 +29,7 @@ function RouteComponent() {
   return (
     <div className="flex flex-col gap-4">
       <Title>Top Airing Anime</Title>
-      <Carousel
+      {/* <Carousel
         opts={{
           align: "start",
         }}
@@ -63,8 +55,8 @@ function RouteComponent() {
             </CarouselItem>
           ))}
         </CarouselContent>
-      </Carousel>
-      {/* <div className="flex gap-4 overflow-auto">
+      </Carousel> */}
+      <div className="flex gap-4 overflow-auto">
         {weeklyAnime.data.map((anime) => (
           <div key={anime.mal_id} className="h-[300px] w-[300px]">
             <img
@@ -75,7 +67,7 @@ function RouteComponent() {
             <h2 className="text-lg font-bold">{anime.title}</h2>
           </div>
         ))}
-      </div> */}
+      </div>
     </div>
   );
 }
