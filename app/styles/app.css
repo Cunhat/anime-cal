@@ -1,7 +1,6 @@
-@import "tailwindcss";
+@import "tailwindcss" source("../");
 
 @plugin "tailwindcss-animate";
-
 @custom-variant dark (&:is(.dark *));
 
 :root {

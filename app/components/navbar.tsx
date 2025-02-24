@@ -1,8 +1,9 @@
 import { Button } from "./ui/button";
 import { Link } from "@tanstack/react-router";
+
 export default function Navbar() {
   return (
-    <nav className="flex items-center justify-between p-4">
+    <nav className="flex items-center justify-between p-4 container mx-auto">
       <Link to="/">
         <h1 className="relative bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 bg-clip-text text-xl font-bold tracking-tighter text-transparent sm:text-2xl [text-shadow:_0_1px_30px_rgb(236_72_153_/_20%)]">
           AnimeCal
