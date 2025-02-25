@@ -10,7 +10,7 @@ function RouteComponent() {
   return (
     <div className="h-screen flex flex-col bg-black">
       <Navbar />
-      <div className="container mx-auto px-4 overflow-auto h-full">
+      <div className="container mx-auto p-4 overflow-auto h-full">
         <Outlet />
       </div>
     </div>

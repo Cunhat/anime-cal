@@ -13,7 +13,7 @@ import { createServerFn } from "@tanstack/start";
 const fetchTopSeasonsAnime = createServerFn({ method: "GET" }).handler(
   async () => {
     const response = await fetch(
-      "https://api.jikan.moe/v4/seasons/now?sfw=true"
+      "https://api.jikan.moe/v4/seasons/now?sfw=true&filter=tv"
     );
     const data = await response.json();
     return data as TopSeasonsAnime;
@@ -47,9 +47,9 @@ function RouteComponent() {
         className="w-full"
       >
         <CarouselContent className="">
-          {topSeasonsAnime.data.map((anime) => (
+          {topSeasonsAnime.data.map((anime, index) => (
             <CarouselItem
-              key={anime.mal_id}
+              key={anime.mal_id + index}
               className="lg:basis-1/5 basis-1/2 sm:basis-1/3 md:basis-1/4 "
             >
               <AnimeCard anime={anime} />
