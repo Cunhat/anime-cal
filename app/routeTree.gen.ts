@@ -22,6 +22,7 @@ import { Route as PostsPostIdImport } from './routes/posts.$postId'
 import { Route as dashboardDashboardImport } from './routes/(dashboard)/_dashboard'
 import { Route as PostsPostIdDeepImport } from './routes/posts_.$postId.deep'
 import { Route as dashboardDashboardHomeImport } from './routes/(dashboard)/_dashboard.home'
+import { Route as dashboardDashboardAnimeAnimeIdImport } from './routes/(dashboard)/_dashboard.anime.$animeId'
 
 // Create Virtual Routes
 
@@ -86,6 +87,13 @@ const dashboardDashboardHomeRoute = dashboardDashboardHomeImport.update({
   path: '/home',
   getParentRoute: () => dashboardDashboardRoute,
 } as any)
+
+const dashboardDashboardAnimeAnimeIdRoute =
+  dashboardDashboardAnimeAnimeIdImport.update({
+    id: '/anime/$animeId',
+    path: '/anime/$animeId',
+    getParentRoute: () => dashboardDashboardRoute,
+  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -161,6 +169,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsPostIdDeepImport
       parentRoute: typeof rootRoute
     }
+    '/(dashboard)/_dashboard/anime/$animeId': {
+      id: '/(dashboard)/_dashboard/anime/$animeId'
+      path: '/anime/$animeId'
+      fullPath: '/anime/$animeId'
+      preLoaderRoute: typeof dashboardDashboardAnimeAnimeIdImport
+      parentRoute: typeof dashboardDashboardImport
+    }
   }
 }
 
@@ -180,10 +195,12 @@ const PostsRouteWithChildren = PostsRoute._addFileChildren(PostsRouteChildren)
 
 interface dashboardDashboardRouteChildren {
   dashboardDashboardHomeRoute: typeof dashboardDashboardHomeRoute
+  dashboardDashboardAnimeAnimeIdRoute: typeof dashboardDashboardAnimeAnimeIdRoute
 }
 
 const dashboardDashboardRouteChildren: dashboardDashboardRouteChildren = {
   dashboardDashboardHomeRoute: dashboardDashboardHomeRoute,
+  dashboardDashboardAnimeAnimeIdRoute: dashboardDashboardAnimeAnimeIdRoute,
 }
 
 const dashboardDashboardRouteWithChildren =
@@ -210,6 +227,7 @@ export interface FileRoutesByFullPath {
   '/posts/': typeof PostsIndexRoute
   '/home': typeof dashboardDashboardHomeRoute
   '/posts/$postId/deep': typeof PostsPostIdDeepRoute
+  '/anime/$animeId': typeof dashboardDashboardAnimeAnimeIdRoute
 }
 
 export interface FileRoutesByTo {
@@ -220,6 +238,7 @@ export interface FileRoutesByTo {
   '/posts': typeof PostsIndexRoute
   '/home': typeof dashboardDashboardHomeRoute
   '/posts/$postId/deep': typeof PostsPostIdDeepRoute
+  '/anime/$animeId': typeof dashboardDashboardAnimeAnimeIdRoute
 }
 
 export interface FileRoutesById {
@@ -234,6 +253,7 @@ export interface FileRoutesById {
   '/posts/': typeof PostsIndexRoute
   '/(dashboard)/_dashboard/home': typeof dashboardDashboardHomeRoute
   '/posts_/$postId/deep': typeof PostsPostIdDeepRoute
+  '/(dashboard)/_dashboard/anime/$animeId': typeof dashboardDashboardAnimeAnimeIdRoute
 }
 
 export interface FileRouteTypes {
@@ -247,6 +267,7 @@ export interface FileRouteTypes {
     | '/posts/'
     | '/home'
     | '/posts/$postId/deep'
+    | '/anime/$animeId'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -256,6 +277,7 @@ export interface FileRouteTypes {
     | '/posts'
     | '/home'
     | '/posts/$postId/deep'
+    | '/anime/$animeId'
   id:
     | '__root__'
     | '/'
@@ -268,6 +290,7 @@ export interface FileRouteTypes {
     | '/posts/'
     | '/(dashboard)/_dashboard/home'
     | '/posts_/$postId/deep'
+    | '/(dashboard)/_dashboard/anime/$animeId'
   fileRoutesById: FileRoutesById
 }
 
@@ -333,7 +356,8 @@ export const routeTree = rootRoute
       "filePath": "(dashboard)/_dashboard.tsx",
       "parent": "/(dashboard)",
       "children": [
-        "/(dashboard)/_dashboard/home"
+        "/(dashboard)/_dashboard/home",
+        "/(dashboard)/_dashboard/anime/$animeId"
       ]
     },
     "/posts/$postId": {
@@ -350,6 +374,10 @@ export const routeTree = rootRoute
     },
     "/posts_/$postId/deep": {
       "filePath": "posts_.$postId.deep.tsx"
+    },
+    "/(dashboard)/_dashboard/anime/$animeId": {
+      "filePath": "(dashboard)/_dashboard.anime.$animeId.tsx",
+      "parent": "/(dashboard)/_dashboard"
     }
   }
 }

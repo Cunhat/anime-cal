@@ -5,7 +5,7 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { topSeasonsAnimeQueryOptions } from "@/routes/(dashboard)/_dashboard.home";
+import { topSeasonsAnimeQueryOptions } from "@/server/anime";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Suspense } from "react";
 
@@ -20,6 +20,8 @@ export function SeasonalAnime() {
 function SeasonalAnimeSuspense() {
   const topSeasonsAnimeQuery = useSuspenseQuery(topSeasonsAnimeQueryOptions);
   const topSeasonsAnime = topSeasonsAnimeQuery.data;
+
+  console.log(topSeasonsAnime);
 
   return (
     <div className="flex flex-col gap-4">

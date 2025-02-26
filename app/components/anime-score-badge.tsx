@@ -1,6 +1,7 @@
 import { cva } from "class-variance-authority";
 import React from "react";
 import { Badge } from "./ui/badge";
+import { Star } from "lucide-react";
 
 const badgeVariants = cva("", {
   variants: {
@@ -25,6 +26,7 @@ export default function AnimeScoreBadge({ score }: AnimeScoreBadgeProps) {
         variant: score >= 8 ? "high" : score >= 6 ? "medium" : "low",
       })}
     >
+      <Star className="w-4 h-4 fill-white" />
       {score}
     </Badge>
   );

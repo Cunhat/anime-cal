@@ -5,7 +5,6 @@ import {
   CarouselContent,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { topSeasonsAnimeQueryOptions } from "@/routes/(dashboard)/_dashboard.home";
 import { topAnimeQueryOptions } from "@/server/anime";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { Suspense } from "react";

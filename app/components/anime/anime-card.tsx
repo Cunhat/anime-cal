@@ -1,4 +1,4 @@
-import { TopSeasonsAnime } from "@/schemas/main";
+import { AnimeServerRequest } from "@/schemas/main";
 import React from "react";
 import {
   Tooltip,
@@ -9,36 +9,39 @@ import {
 import AnimeScoreBadge from "../anime-score-badge";
 import { Badge } from "../ui/badge";
 import { getTimeUntilNextEpisode } from "@/utils/date-utils";
-import { Clock } from "lucide-react";
+import { Clock, Heart, Tv } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 
 type AnimeCardProps = {
-  anime: TopSeasonsAnime["data"][number];
+  anime: AnimeServerRequest["data"][number];
 };
 
 export function AnimeCard({ anime }: AnimeCardProps) {
   return (
-    <AnimeCardTooltip anime={anime}>
-      <div
-        key={anime.mal_id}
-        className="aspect-[3/4] relative hover:cursor-pointer flex flex-col gap-2"
-      >
-        <div className="absolute top-1 right-1">
-          <AnimeScoreBadge score={anime.score} />
-        </div>
-        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black/90 flex flex-col items-start justify-end p-2">
-          <div className="flex flex-col h-1/3 justify-end items-center text-left">
-            <p className="text-white text-bottom text-sm w-full">
-              {anime.title_english || anime.title}
-            </p>
+    <Link to="/anime/$animeId" params={{ animeId: anime.mal_id.toString() }}>
+      <AnimeCardTooltip anime={anime}>
+        <div
+          key={anime.mal_id}
+          className="aspect-[3/4] relative hover:cursor-pointer flex flex-col gap-2"
+        >
+          <div className="absolute top-1 right-1">
+            <AnimeScoreBadge score={anime.score} />
           </div>
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-black/90 flex flex-col items-start justify-end p-2">
+            <div className="flex flex-col h-1/3 justify-end items-center text-left">
+              <p className="text-white text-bottom text-sm w-full">
+                {anime.title_english || anime.title}
+              </p>
+            </div>
+          </div>
+          <img
+            src={anime.images.webp.large_image_url}
+            alt={anime.title}
+            className="object-cover w-full h-full rounded-lg"
+          />
         </div>
-        <img
-          src={anime.images.webp.large_image_url}
-          alt={anime.title}
-          className="object-cover w-full h-full rounded-lg"
-        />
-      </div>
-    </AnimeCardTooltip>
+      </AnimeCardTooltip>
+    </Link>
   );
 }
 
@@ -64,6 +67,22 @@ const AnimeCardTooltip = ({
                 {anime.title_english}
               </h1>
               <AnimeScoreBadge score={anime.score} />
+            </div>
+            <div className="flex gap-2 wrap">
+              <Badge variant="default" className="text-xs bg-red-500">
+                {anime.rating}
+              </Badge>
+              <Badge variant="default" className="text-xs bg-green-600">
+                {anime.type}
+              </Badge>
+              <Badge variant="default" className="text-xs bg-pink-500">
+                <Heart className="w-4 h-4 fill-white" />
+                {anime.favorites}
+              </Badge>
+              <Badge variant="default" className="text-xs bg-blue-500">
+                <Tv className="w-4 h-4" />
+                {anime.episodes} ep
+              </Badge>
             </div>
 
             {anime.airing && anime.broadcast && anime.broadcast.day && (
