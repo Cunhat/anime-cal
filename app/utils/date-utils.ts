@@ -3,6 +3,7 @@ import utc from "dayjs/plugin/utc";
 import timezone from "dayjs/plugin/timezone";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { Broadcast } from "@/schemas/main";
+import { queryOptions } from "@tanstack/react-query";
 
 // Initialize dayjs plugins
 dayjs.extend(utc);
@@ -93,3 +94,53 @@ export function getTimeUntilNextEpisode(broadcast: Broadcast) {
     ),
   };
 }
+
+/**
+ * Create a query options object for prefetching next episode time
+ * @param animeId The unique ID of the anime
+ * @param broadcast The broadcast information
+ * @returns Query options for React Query
+ */
+export const createNextEpisodeQueryOptions = (
+  animeId: number,
+  broadcast: Broadcast
+) => {
+  return queryOptions({
+    queryKey: ["nextEpisode", animeId],
+    queryFn: () => getTimeUntilNextEpisode(broadcast),
+    // Refetch every hour to keep the countdown updated
+    refetchInterval: 60 * 60 * 1000,
+    // Keep the data fresh for 1 hour
+    staleTime: 60 * 60 * 1000,
+  });
+};
+
+/**
+ * Create batch query options for prefetching multiple anime next episode times
+ * @param animeList Array of anime data with ID and broadcast information
+ * @returns Query options for React Query
+ */
+export const createBatchNextEpisodeQueryOptions = (
+  animeList: Array<{ mal_id: number; broadcast: Broadcast }>
+) => {
+  return queryOptions({
+    queryKey: ["nextEpisodes", "batch"],
+    queryFn: () => {
+      const results = animeList.reduce(
+        (acc, anime) => {
+          if (anime.broadcast && anime.broadcast.day && anime.broadcast.time) {
+            acc[anime.mal_id] = getTimeUntilNextEpisode(anime.broadcast);
+          }
+          return acc;
+        },
+        {} as Record<number, ReturnType<typeof getTimeUntilNextEpisode>>
+      );
+
+      return results;
+    },
+    // Refetch every hour to keep the countdown updated
+    refetchInterval: 60 * 60 * 1000,
+    // Keep the data fresh for 1 hour
+    staleTime: 60 * 60 * 1000,
+  });
+};
