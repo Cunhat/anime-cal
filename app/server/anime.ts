@@ -1,4 +1,8 @@
-import { AnimeByIdServerRequest, AnimeServerRequest } from "@/schemas/main";
+import {
+  AnimeByIdServerRequest,
+  AnimeServerRequest,
+  Characters,
+} from "@/schemas/main";
 import { queryOptions } from "@tanstack/react-query";
 import { createServerFn } from "@tanstack/start";
 
@@ -46,4 +50,23 @@ export const animeByIdQueryOptions = (animeId: string) =>
   queryOptions({
     queryKey: ["animeById", animeId],
     queryFn: () => fetchAnimeById({ data: animeId }),
+  });
+
+const fetchAnimeCharacters = createServerFn({
+  method: "GET",
+})
+  .validator((animeId: string) => animeId)
+  .handler(async ({ data }) => {
+    const response = await fetch(
+      `https://api.jikan.moe/v4/anime/${data}/characters`
+    );
+    const resp = await response.json();
+
+    return resp as Characters;
+  });
+
+export const animeCharactersQueryOptions = (animeId: string) =>
+  queryOptions({
+    queryKey: ["animeCharacters", animeId],
+    queryFn: () => fetchAnimeCharacters({ data: animeId }),
   });
