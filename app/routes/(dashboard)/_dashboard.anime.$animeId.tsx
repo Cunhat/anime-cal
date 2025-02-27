@@ -26,9 +26,8 @@ export const Route = createFileRoute("/(dashboard)/_dashboard/anime/$animeId")({
 function AnimePage() {
   const { animeId } = Route.useParams();
   const animeQuery = useSuspenseQuery(animeByIdQueryOptions(animeId));
+  console.log(animeQuery);
   const anime = animeQuery.data.data;
-
-  console.log(anime);
 
   return (
     <div className="min-h-screen ">
@@ -147,23 +146,23 @@ function AnimePage() {
                   <div className="space-y-2">
                     <div className="flex items-center gap-2 text-muted-foreground">
                       <Clock className="w-4 h-4" />
-                      <span className="text-sm">Duration</span>
+                      <span className="text-sm text-muted">Duration</span>
                     </div>
-                    <p className="font-medium">24 min per ep</p>
+                    <p className="font-medium text-white">24 min per ep</p>
                   </div>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2 text-muted-foreground">
                       <Calendar className="w-4 h-4" />
-                      <span className="text-sm">Aired</span>
+                      <span className="text-sm text-muted">Aired</span>
                     </div>
-                    <p className="font-medium">Jan 2024 - Present</p>
+                    <p className="font-medium text-white">Jan 2024 - Present</p>
                   </div>
                   <div className="space-y-2">
                     <div className="flex items-center gap-2 text-muted-foreground">
                       <Users className="w-4 h-4" />
-                      <span className="text-sm">Studios</span>
+                      <span className="text-sm text-muted">Studios</span>
                     </div>
-                    <p className="font-medium">Studio Name</p>
+                    <p className="font-medium text-white">Studio Name</p>
                   </div>
                 </div>
               </TabsContent>

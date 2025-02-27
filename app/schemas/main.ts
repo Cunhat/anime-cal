@@ -5,6 +5,10 @@ export interface AnimeServerRequest {
   pagination: Pagination;
 }
 
+export interface AnimeByIdServerRequest {
+  data: Datum;
+}
+
 export interface Datum {
   mal_id: number;
   url: string;
