@@ -7,6 +7,7 @@ import {
   animeByIdQueryOptions,
   animeCharactersQueryOptions,
   animeEpisodesQueryOptions,
+  animeRecommendationsQueryOptions,
 } from "@/server/anime";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
@@ -31,7 +32,12 @@ export default function AnimeMain({ animeId }: AnimeMainProps) {
   const episodesQuery = useSuspenseQuery(animeEpisodesQueryOptions(animeId));
   const episodes = episodesQuery.data.data;
 
-  console.log(episodes);
+  const recommendationsQuery = useSuspenseQuery(
+    animeRecommendationsQueryOptions(animeId)
+  );
+  const recommendations = recommendationsQuery.data.data;
+
+  console.log(recommendations);
 
   return (
     <div className="min-h-screen ">

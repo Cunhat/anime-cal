@@ -1,5 +1,6 @@
 import {
   AnimeByIdServerRequest,
+  AnimeRecommendationsRequest,
   AnimeServerRequest,
   Characters,
   EpisodeRequest,
@@ -89,4 +90,23 @@ export const animeEpisodesQueryOptions = (animeId: string) =>
   queryOptions({
     queryKey: ["animeEpisodes", animeId],
     queryFn: () => fetchAnimeEpisodes({ data: animeId }),
+  });
+
+const fetchAnimeRecommendations = createServerFn({
+  method: "GET",
+})
+  .validator((animeId: string) => animeId)
+  .handler(async ({ data }) => {
+    const response = await fetch(
+      `https://api.jikan.moe/v4/anime/${data}/recommendations`
+    );
+    const resp = await response.json();
+
+    return resp as AnimeRecommendationsRequest;
+  });
+
+export const animeRecommendationsQueryOptions = (animeId: string) =>
+  queryOptions({
+    queryKey: ["animeRecommendations", animeId],
+    queryFn: () => fetchAnimeRecommendations({ data: animeId }),
   });

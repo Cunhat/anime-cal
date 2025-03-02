@@ -5,6 +5,7 @@ import {
   animeByIdQueryOptions,
   animeCharactersQueryOptions,
   animeEpisodesQueryOptions,
+  animeRecommendationsQueryOptions,
 } from "@/server/anime";
 import { createFileRoute } from "@tanstack/react-router";
 
@@ -17,10 +18,10 @@ export const Route = createFileRoute("/(dashboard)/_dashboard/anime/$animeId")({
     await context.queryClient.ensureQueryData(
       animeEpisodesQueryOptions(animeId)
     );
+    await context.queryClient.ensureQueryData(
+      animeRecommendationsQueryOptions(animeId)
+    );
   },
-  //   head: ({ loaderData }) => ({
-  //     meta: loaderData ? [{ title: loaderData.title }] : undefined,
-  //   }),
   errorComponent: () => <div>Not Found...</div>,
   notFoundComponent: () => {
     return <NotFound>Anime not found</NotFound>;
