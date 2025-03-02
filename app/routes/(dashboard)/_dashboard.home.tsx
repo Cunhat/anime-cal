@@ -7,8 +7,8 @@ import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/(dashboard)/_dashboard/home")({
   loader: ({ context: { queryClient } }) => {
-    queryClient.prefetchQuery(topSeasonsAnimeQueryOptions);
-    queryClient.prefetchQuery(topAnimeQueryOptions);
+    queryClient.ensureQueryData(topSeasonsAnimeQueryOptions);
+    queryClient.ensureQueryData(topAnimeQueryOptions);
   },
   component: RouteComponent,
 });

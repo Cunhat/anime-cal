@@ -4,14 +4,19 @@ import { Anime } from "@/modules/anime/views/anime";
 import {
   animeByIdQueryOptions,
   animeCharactersQueryOptions,
+  animeEpisodesQueryOptions,
 } from "@/server/anime";
-import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/(dashboard)/_dashboard/anime/$animeId")({
   loader: async ({ params: { animeId }, context }) => {
-    context.queryClient.ensureQueryData(animeCharactersQueryOptions(animeId));
+    await context.queryClient.ensureQueryData(
+      animeCharactersQueryOptions(animeId)
+    );
     await context.queryClient.ensureQueryData(animeByIdQueryOptions(animeId));
+    await context.queryClient.ensureQueryData(
+      animeEpisodesQueryOptions(animeId)
+    );
   },
   //   head: ({ loaderData }) => ({
   //     meta: loaderData ? [{ title: loaderData.title }] : undefined,

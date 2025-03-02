@@ -6,12 +6,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import {
   animeByIdQueryOptions,
   animeCharactersQueryOptions,
+  animeEpisodesQueryOptions,
 } from "@/server/anime";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { Calendar, Clock, Users } from "lucide-react";
 import { Play, Share2, Star } from "lucide-react";
 import Characters from "./characters";
+import { Episodes } from "./episodes";
 
 type AnimeMainProps = {
   animeId: string;
@@ -20,10 +22,16 @@ type AnimeMainProps = {
 export default function AnimeMain({ animeId }: AnimeMainProps) {
   const animeQuery = useSuspenseQuery(animeByIdQueryOptions(animeId));
   const anime = animeQuery.data.data;
+
   const charactersQuery = useSuspenseQuery(
     animeCharactersQueryOptions(animeId)
   );
   const characters = charactersQuery.data.data;
+
+  const episodesQuery = useSuspenseQuery(animeEpisodesQueryOptions(animeId));
+  const episodes = episodesQuery.data.data;
+
+  console.log(episodes);
 
   return (
     <div className="min-h-screen ">
@@ -155,28 +163,7 @@ export default function AnimeMain({ animeId }: AnimeMainProps) {
                 <Characters characters={characters} />
               </TabsContent>
               <TabsContent value="episodes" className="mt-6">
-                {/* <ScrollArea className="h-[400px] rounded-md border p-4 bg-card/50"> */}
-                {[...Array(12)].map((_, i) => (
-                  <div
-                    key={i}
-                    className="flex items-start gap-4 pb-4 mb-4 border-b last:border-0 hover:bg-muted/50 rounded-lg p-2 transition-colors"
-                  >
-                    <img
-                      src="/placeholder.svg?height=120&width=200"
-                      alt={`Episode ${i + 1}`}
-                      className="w-32 h-20 object-cover rounded-md"
-                    />
-                    <div>
-                      <h3 className="font-semibold text-card-foreground">
-                        Episode {i + 1}
-                      </h3>
-                      <p className="text-sm text-muted-foreground">
-                        A brief description of what happens in this episode...
-                      </p>
-                    </div>
-                  </div>
-                ))}
-                {/* </ScrollArea> */}
+                <Episodes episodes={episodes} />
               </TabsContent>
             </Tabs>
           </div>
